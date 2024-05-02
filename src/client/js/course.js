@@ -61,7 +61,7 @@ const drawMap = (latitude, longitude) => {
 const configLocation = () => {
   if(navigator.geolocation){
 navigator.geolocation.watchPosition((pos)=>{
-
+      delMarker()
       userLatitude = pos.coords.latitude;
       userLongitude = pos.coords.longitude;
       // 다른 위치에 있어도
