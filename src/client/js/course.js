@@ -6,7 +6,38 @@ let userLongitude;
 let isMapDrawn = false;
 let courseData = [];
 let markers = [];
+let courseNo = 0; // 0 내자신으로 db id 1번 start
+let clickCourse = 0;
+const panTo = (latitude, longitude) => {
+  const position = new kakao.maps.LatLng(latitude, longitude);
+  map.panTo(position);
+};
 
+const clickCourseList = (e, courseNo) =>{
+  if(clickCourse !== courseNo){
+    const courseWrap = document.querySelectorAll(".course");
+    for (let i =0; i<courseWrap.length;i++){
+      courseWrap[i].classList.remove("on");
+    }
+    // 클릭한 아이 색칠
+    e.currentTarget.classList.add("on");
+
+    let courseLatitude;
+    let courseLongitude;
+
+    if (courseNo === 0){
+      courseLatitude = userLatitude;
+      courseLongitude = userLongitude;
+    }else{
+     const matchCourse = courseData.find(course => course.course_no === courseNo)
+     courseLatitude = matchCourse.course_latitude;
+     courseLongitude = matchCourse.course_longitude;
+    }
+    panTo(courseLatitude, courseLongitude);
+
+    clickCourse = courseNo;
+  }
+}
 //  마커를 그리는 함수
 const addMarker = (position) =>{
   let marker = new kakao.maps.Marker({
@@ -79,6 +110,8 @@ navigator.geolocation.watchPosition((pos)=>{
         isMapDrawn = true;
       }
       addMarker(new kakao.maps.LatLng(userLatitude, userLongitude))
+
+      panTo(userLatitude, userLongitude)
     });
   }
 }
@@ -89,11 +122,11 @@ const makeCourseNaviHTML = (data) =>{
   const courseWrap = document.getElementById("courseWrap")
   let html = "";
   for (let i = 0; i < data.length; i++){
-    html += "<li class='course'>"
+    html += `<li class='course' onclick="clickCourseList(event,${data[i].course_no})">`
     html += `<p>${data[i].course_name}</p>`;
     html += '</li>'
   }
-  html += "<li id='myPosition' class='course on'>나의위치</li>"
+  html += `<li id='myPosition' class='course on' onclick="clickCourseList(event,0)">나의위치</li>`
   courseWrap.innerHTML = html
 
 };
