@@ -4,5 +4,5 @@ node_modules
 # vscode 설정
 .vscode
 
-#중요한 정보 설정 
+#중요한 환경 변수 정보
 .env
