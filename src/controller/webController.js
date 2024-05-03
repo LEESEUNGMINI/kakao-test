@@ -7,6 +7,7 @@ export const loginPage = (req,res) => res.render("login")
 export const joinPage = (req,res) => res.render("join")
 export const qrPage = (req,res) => res.render("qr")
 
+export const userPage = (req,res) => res.render("user");
 // 1. REACT 
 // 2. 카카오 API 지도 화면에 + 카카오 지도 JS파일 
 

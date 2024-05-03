@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import express from "express";
-import { coursePage, introducePage, joinPage, loginPage, mainPage, qrPage } from "./controller/webController.js";
+import { coursePage, introducePage, joinPage, loginPage, mainPage, qrPage, userPage,  } from "./controller/webController.js";
 import db from '../config/db.js';
 import { getCourseList, qrCheck } from './controller/courseContoller.js';
 import { joinUser, loginUser } from './controller/authController.js';
@@ -27,6 +27,7 @@ app.use(express.json());
 app.get("/", mainPage);
 app.get("/introduce", introducePage);
 app.get("/course", coursePage)
+app.get("/users",userPage)
 
 // API Router 
 app.get("/api/course", notNeededAuth, getCourseList);
