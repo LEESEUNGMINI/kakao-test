@@ -1,3 +1,33 @@
+const courseCheckFetch = async (qrCode) =>{
+  console.log(qrCode);
+  const accessToken = localStorage.getItem("accessToken");
+  if(!accessToken){
+    window.location.href = "/login?error=need_login"
+    return
+    }
+if(!qrCode){
+  msgAlert("bottom","잘못된 qr코드입니다.","error")
+  setTimeout(startScan,3000);
+  return
+}
+  // 서버로 보내기
+  const response = await fetch("/api/course",{
+    method: 'POST',
+    headers: {
+        "Content-Type" : "application/json",
+        Accept: "application/json", 
+        Authorizetion: `Bearer${accessToken}`
+    },
+    body: JSON.stringify({
+        qrCode: qrCode,
+    }),
+  });
+  const result = await response.json();
+  console.log(result)
+
+  setTimeout(startScan,3000)
+};
+
 function startScan() {
   // 비디오 요소 생성 및 캔버스 설정
   let video = document.createElement("video");
@@ -85,6 +115,7 @@ function startScan() {
 
     // 다음 프레임에 대해 함수를 다시 호출합니다.
     requestAnimationFrame(tick);
+    
   }
 }
 startScan();

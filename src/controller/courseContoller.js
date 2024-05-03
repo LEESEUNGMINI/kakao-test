@@ -14,4 +14,11 @@ export const getCourseList = async (req,res) =>{
   const result = await db.execute(QUERY,[no]).then((result => result[0]));
   console.log(result)
   res.status(200).json({status:"success",message:"코스 데이트 전송 완료",data:result,})
+};
+
+export const qrCheck = async (req,res) => {
+  const user = req.user;
+  const qrCode = req.body;
+  console.log(user)
+  console.log(qrCode)
 }
