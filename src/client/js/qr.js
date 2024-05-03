@@ -16,14 +16,23 @@ if(!qrCode){
     headers: {
         "Content-Type" : "application/json",
         Accept: "application/json", 
-        Authorizetion: `Bearer${accessToken}`
+        Authorization: `Bearer ${accessToken}`
     },
     body: JSON.stringify({
-        qrCode: qrCode,
+        qrCode,
     }),
   });
   const result = await response.json();
   console.log(result)
+  if(result.status === "success"){
+    msgAlert("bottom","방문 완료", "success");
+    setTimeout(()=>{
+      window.location.href = "/course"
+    },2000)
+    return
+  }else{
+    msgAlert("bottom", result.message,"error")
+  }
 
   setTimeout(startScan,3000)
 };

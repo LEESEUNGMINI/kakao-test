@@ -4,7 +4,7 @@ import { coursePage, introducePage, joinPage, loginPage, mainPage, qrPage } from
 import db from '../config/db.js';
 import { getCourseList, qrCheck } from './controller/courseContoller.js';
 import { joinUser, loginUser } from './controller/authController.js';
-import { notNeededAuth } from './Middleware/auth.js';
+import { neededAuth, notNeededAuth } from './Middleware/auth.js';
 
 const app = express();
 const PORT = 8000;
@@ -30,7 +30,7 @@ app.get("/course", coursePage)
 
 // API Router 
 app.get("/api/course", notNeededAuth, getCourseList);
-app.post("/api/course",notNeededAuth, qrCheck)
+app.post("/api/course",neededAuth, qrCheck)
 app.post("/api/join",joinUser)
 app.post("/api/login",loginUser)
 // 서버 오픈
